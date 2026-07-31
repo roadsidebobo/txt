@@ -25,6 +25,8 @@ game:GetService("UserInputService").MouseBehavior = Enum.MouseBehavior.Default;
 
 local hover = "rbxassetid://114151646303220"
 local click = "rbxassetid://103003970474571"
+local open = "rbxassetid://18926058970"  
+local close = "rbxassetid://88764973132065"  
 
 local function resetPlayer()
     local player = game:GetService("Players").LocalPlayer
@@ -679,6 +681,15 @@ local script = G2L["42"];
 	
 	local isVisible = true
 	
+	local function playGUISound(soundId)
+		local sound = Instance.new("Sound")
+		sound.SoundId = soundId
+		sound.Volume = 0.5
+		sound.Parent = mainFrame
+		sound:Play()
+		game:GetService("Debris"):AddItem(sound, 2)
+	end
+	
 	local function toggleUI()
 		isVisible = not isVisible
 	
@@ -686,6 +697,13 @@ local script = G2L["42"];
 	
 		local scaleTween = TweenService:Create(mainFrame, tweenInfo, {Size = targetSize})
 		scaleTween:Play()
+		
+
+		if isVisible then
+			playGUISound(open)  
+		else
+			playGUISound(close)   
+		end
 	end
 	
 	UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
